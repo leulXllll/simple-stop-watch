@@ -9,6 +9,8 @@ const Stopwatch = () => {
     
     const [hour,setHour] =useState(0);
 
+    const [resume,setResume] =useState(false);
+
     const [value,setValue] =useState(false);
 
     const secref = useRef(0);
@@ -25,11 +27,11 @@ const Stopwatch = () => {
 
                 if(minref.current==59 && secref.current==59){
                     setHour(hour+1);
-                    setSec(0);
+                    setSec(-1);
                     setMin(0);
                 }else if(secref.current==59){
                     setMin(min+1);
-                    setSec(0);
+                    setSec(-1);
                 } 
                 
                 setSec(sec=>sec+1);
@@ -41,6 +43,9 @@ const Stopwatch = () => {
     },[sec,value]);
 
         const stop = ()=>{
+            if(sec!=0 || min!=0 || hour!=0){
+                setResume(true);
+            }
             setValue(false);
         }
         const start = ()=>{
@@ -50,11 +55,13 @@ const Stopwatch = () => {
             setSec(0);
             setMin(0);
             setHour(0);
+            setValue(false);
+            setResume(false);
         }
     return ( 
         <div>
             <h1>{hour}:{min}:{sec}</h1>
-            <button onClick={start} >Start</button>
+            <button onClick={start} >{(resume)?'Resume':'Start'}</button>
             <button onClick={stop} >Stop</button>
             <button onClick={reset} >Reset</button>
         </div>

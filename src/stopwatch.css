@@ -41,6 +41,7 @@ body{
 }
 .start-btn{
     background-color: rgb(56, 180, 56);
+    width: 130px;
 
 }
 .start-btn:hover{
